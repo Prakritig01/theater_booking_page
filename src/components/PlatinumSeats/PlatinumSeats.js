@@ -11,7 +11,7 @@ const PlatinumSeats = () => {
         {platinumSeats.map((seat, index) => (
           <div
             key={seat.id}
-            className="w-7 h-7 bg-white-200 border-2 border-blue-500 rounded-md flex justify-center items-center"
+            className="w-7 h-7 bg-white-200 border-2 border-blue-500 rounded-md flex justify-center items-center cursor-pointer"
           >
             <p className="text-sm text-blue-500">{seat.column}</p>
           </div>
