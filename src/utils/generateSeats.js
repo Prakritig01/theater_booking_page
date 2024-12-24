@@ -24,6 +24,7 @@ export const generateSeats = () => {
         row,
         column,
         isBooked: false, // Default state for each seat
+        isSelected: false, 
         price,           // Price of the seat
         category        // Category of the seat
       });
