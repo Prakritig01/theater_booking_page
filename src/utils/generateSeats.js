@@ -1,6 +1,7 @@
+import { COLUMNS } from "./constants";
 export const generateSeats = () => {
   const rows = 12;
-  const columns = 20;
+  const columns = COLUMNS;
   const seatData = [];
 
   for (let row = 1; row <= rows; row++) {

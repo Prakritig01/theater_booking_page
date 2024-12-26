@@ -1,9 +1,10 @@
 import React from 'react'
 import { groupSeatsByRow } from '../../utils/groupSeats';
 import SingleSeat from '../SingleSeat/SingleSeat';
+import { COLUMNS } from '../../utils/constants';
 
 const SeatCategory = ({title,price,seats}) => {
-    const rows = groupSeatsByRow(seats,20);
+    const rows = groupSeatsByRow(seats,COLUMNS);
   return (
     <div className="container mx-auto p-4">
       <h3 className="flex justify-center my-0">

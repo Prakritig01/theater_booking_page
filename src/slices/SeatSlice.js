@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateSeats } from "../utils/generateSeats";
 
+
+function filterSelectedSeats(allSeats){
+  return allSeats.filter((seat) => seat.isSelected);
+}
+
 const seatSlice = createSlice({
   name: "seats",
   initialState: generateSeats(),
@@ -19,7 +24,8 @@ const seatSlice = createSlice({
       // console.log({ ...seat });
     },
     bookSelectedSeats: (state,action) => {
-      const { selectedSeats } = action.payload;
+      // const { selectedSeats } = action.payload;
+      const selectedSeats = filterSelectedSeats(state);
       console.log("selected Seats in slice :" ,selectedSeats);
       selectedSeats.forEach((seat)=> {
         const singleSeat = state.find((item) => item.id === seat.id);
@@ -45,9 +51,15 @@ export const selectSilverSeats = (state) => {
   return state.seatSlice.filter((seat) => seat.category === "silver");
 };
 
-export const selectSelectedSeats = (state) => {
-  return state.seatSlice.filter((seat) => seat.isSelected);
+export const selectSelectedSeats = (state) => filterSelectedSeats(state.seatSlice);
+
+export const selectTotalAmount = (state) => {
+  const selectedSeats = selectSelectedSeats(state);
+  console.log("selected seats in amount" ,selectedSeats);
+  return selectedSeats.reduce((total, seat) => total + seat.price, 0);
 };
+
+
 
 export const { toggleSelectSeat,bookSelectedSeats } = seatSlice.actions;
 export default seatSlice.reducer;
