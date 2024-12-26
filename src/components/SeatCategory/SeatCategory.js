@@ -6,7 +6,7 @@ const SeatCategory = ({title,price,seats}) => {
     const rows = groupSeatsByRow(seats,20);
   return (
     <div className="container mx-auto p-4">
-      <h3 className="flex justify-center my-2">
+      <h3 className="flex justify-center my-0">
         {title} : ₹{price}
       </h3>
       {rows.map((row, rowIndex) => (

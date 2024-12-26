@@ -12,11 +12,12 @@ const SingleSeat = ({seat}) => {
               seat.isSelected
                 ? "bg-blue-500 text-white text-xs"
                 : "bg-white text-blue-500 text-xs"
-            } border-2 border-blue-500 rounded-md flex justify-center items-center cursor-pointer`}
+            } border-2 border-blue-500 rounded-md flex justify-center items-center cursor-pointer hover:bg-blue-500 hover:text-white` }
             onClick={() => {
               dispatch(toggleSelectSeat(seat.id));
               console.log(seat.id);
             }}
+            
           >
               {seat.column}
             </button>
