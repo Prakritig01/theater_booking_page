@@ -1,35 +1,26 @@
-import { COLUMNS } from "./constants";
-export const generateSeats = () => {
-  const rows = 12;
-  const columns = COLUMNS;
-  const seatData = [];
 
-  for (let row = 1; row <= rows; row++) {
-    for (let column = 1; column <= columns; column++) {
-      let price, category;
+ const generateSeats = (layout) => {
 
-      if (row === 1) {
-        price = 300;
-        category = "platinum";
-      } else if (row >= 2 && row <= 9) {
-        price = 200;
-        category = "gold";
-      } else if (row >= 10 && row <= 12) {
-        price = 100;
-        category = "silver";
+  const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";  
+  let alphaCount = 0;
+   return layout.reverse().map((section) => {
+    const {name,price,rows,columns} = section;
+    const singleCategoryObj = {};
+    singleCategoryObj.name = name;
+    singleCategoryObj.price = price;
+    const rowArray = [];
+    for(let i = 1; i<= rows ; i++){
+      const singleRow = [];
+      for(let j = 1; j<= columns; j++){
+        singleRow.push({ id : ALPHA[alphaCount]+j, status : 'available'});
       }
-
-      seatData.push({
-        id: `${row}-${column}`, 
-        row,
-        column,
-        status: "available",
-        price,           
-        category        
-      });
-
+      // console.log("singleRow :" ,singleRow);
+      alphaCount++;
+      rowArray.push(singleRow);
     }
-  }
-
-  return seatData;
+    // console.log("rowArray :" ,rowArray);
+    singleCategoryObj.rows = rowArray;
+    return { name, price, rows: rowArray };
+    // console.log("singleCategoryObj",singleCategoryObj);
+  }).reverse();
 };

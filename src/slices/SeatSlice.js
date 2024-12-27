@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateSeats } from "../utils/generateSeats";
+import { layout } from "../utils/constants";
 
 
 function filterSelectedSeats(allSeats){
@@ -8,7 +9,7 @@ function filterSelectedSeats(allSeats){
 
 const seatSlice = createSlice({
   name: "seats",
-  initialState: generateSeats(),
+  initialState: generateSeats(layout),
   reducers: {
     toggleSelectSeat: (state, action) => {
       const id = action.payload;

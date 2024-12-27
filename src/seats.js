@@ -67,4 +67,6 @@ const seats2 = layout.reverse().map((section) => {
     layout.reverse();
     return { name, price, layout };
 }).reverse();
-console.log(seats2[0].layout);
+console.log(seats2);
+
+
