@@ -19,6 +19,7 @@ const seatSlice = createSlice({
         } else if (seat.status === "selected") {
           seat.status = "available";
         } else if (seat.status === "booked") {
+          console.log("here");
           console.log(`Seat ${id} is already booked and cannot be selected.`);
         }
       }
