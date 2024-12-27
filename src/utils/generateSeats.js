@@ -8,7 +8,6 @@ export const generateSeats = () => {
     for (let column = 1; column <= columns; column++) {
       let price, category;
 
-      // Determine the price and category based on the row
       if (row === 1) {
         price = 300;
         category = "platinum";
@@ -21,13 +20,12 @@ export const generateSeats = () => {
       }
 
       seatData.push({
-        id: `${row}-${column}`, // Unique seat identifier
+        id: `${row}-${column}`, 
         row,
         column,
-        isBooked: false, // Default state for each seat
-        isSelected: false, 
-        price,           // Price of the seat
-        category        // Category of the seat
+        status: "available",
+        price,           
+        category        
       });
 
     }
