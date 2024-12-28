@@ -1,5 +1,5 @@
 import React from "react";
-import SingleSeat from "../SingleSeat/SingleSeat";
+
 
 const Footer = () => {
   return (

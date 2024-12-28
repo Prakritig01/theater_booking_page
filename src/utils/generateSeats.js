@@ -1,5 +1,5 @@
 
- const generateSeats = (layout) => {
+export const generateSeats = (layout) => {
 
   const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";  
   let alphaCount = 0;

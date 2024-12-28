@@ -2,9 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { generateSeats } from "../utils/generateSeats";
 import { layout } from "../utils/constants";
 
-
-function filterSelectedSeats(allSeats){
-  return allSeats.filter((seat) => seat.status === 'selected');
+function filterSelectedSeats(allSeats) {
+  return allSeats.filter((seat) => seat.status === "selected");
 }
 
 const seatSlice = createSlice({
@@ -12,50 +11,57 @@ const seatSlice = createSlice({
   initialState: generateSeats(layout),
   reducers: {
     toggleSelectSeat: (state, action) => {
-      const id = action.payload;
-      const seat = state.find((seat) => seat.id === id);
-      if (seat) {
-        if (seat.status === "available") {
-          seat.status = "selected";
-        } else if (seat.status === "selected") {
-          seat.status = "available";
-        } else if (seat.status === "booked") {
-          console.log("here");
-          console.log(`Seat ${id} is already booked and cannot be selected.`);
-        }
+      const { id, categoryName } = action.payload;
+      const category = state.find((category) => category.name === categoryName);
+
+      if (category) {
+        category.rows.forEach((row) => {
+          row.forEach((seat) => {
+            if (seat.id === id) {
+              if (seat.status === "available") {
+                seat.status = "selected"; // Mark as selected
+              } else if (seat.status === "selected") {
+                seat.status = "available"; // Mark as available
+              }
+              // console.log("seat" ,{...seat});
+            }
+          });
+        });
       }
     },
-    bookSelectedSeats: (state,action) => {
-      const selectedSeats = filterSelectedSeats(state);
-      // console.log("selected Seats in slice :" ,selectedSeats);
-      selectedSeats.forEach((seat)=> {
-        seat.status = "booked";
-        console.log({...seat});
-      })
+    bookSelectedSeats: (state, action) => {
+      const {selectedSeats} = action.payload;
+      console.log("selectedSeats",selectedSeats);
+
+      state.forEach((category) => {
+        category.rows.forEach((row) => {
+          row.forEach((seat) => {
+            const selectedSeatIndex = selectedSeats.findIndex((s) => s.id === seat.id);
+            if (selectedSeatIndex != -1) {
+              seat.status = "booked";
+              console.log(`Seat ${seat.id} booked.`);
+            }
+          });
+        });
+      });
     },
   },
 });
 
 export const selectAllSeats = (state) => state.seatSlice;
-export const selectPlatinumSeats = (state) => {
-  return state.seatSlice.filter((seat) => seat.category === "platinum");
-};
-export const selectGoldSeats = (state) => {
-  return state.seatSlice.filter((seat) => seat.category === "gold");
-};
-export const selectSilverSeats = (state) => {
-  return state.seatSlice.filter((seat) => seat.category === "silver");
-};
 
-export const selectSelectedSeats = (state) => filterSelectedSeats(state.seatSlice);
-
-export const selectTotalAmount = (state) => {
-  const selectedSeats = selectSelectedSeats(state);
-  console.log("selected seats in amount" ,selectedSeats);
-  return selectedSeats.reduce((total, seat) => total + seat.price, 0);
+export const selectSelectedSeats = (state) => {
+  return state.seatSlice.reduce((selectedSeats, category) => {
+    category.rows.forEach((row) => {
+      row.forEach((seat) => {
+        if (seat.status === "selected") {
+          selectedSeats.push(seat);
+        }
+      });
+    });
+    return selectedSeats;
+  }, []);
 };
 
-
-
-export const { toggleSelectSeat,bookSelectedSeats } = seatSlice.actions;
+export const { toggleSelectSeat, bookSelectedSeats } = seatSlice.actions;
 export default seatSlice.reducer;

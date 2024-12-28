@@ -2,6 +2,12 @@ export const COLUMNS = 22;
 
 export const layout = [             // theater layout
     {
+        name: "Special",
+        price : 1500,
+        rows : 1,
+        columns : 7,
+    },
+    {
         name: "Platinum",   // section name
         price: 500,         // price per seat
         rows: 2,            // total rows in the section
@@ -19,4 +25,5 @@ export const layout = [             // theater layout
         rows: 2,
         columns: 15,
     },
+    
   ];

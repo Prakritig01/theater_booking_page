@@ -1,9 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSelectedSeats, bookSelectedSeats } from '../../slices/SeatSlice';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { selectSelectedSeats,bookSelectedSeats } from '../../slices/SeatSlice';
 const Header = () => {
-
   const selectedSeats = useSelector(selectSelectedSeats);
   const dispatch = useDispatch();
 
