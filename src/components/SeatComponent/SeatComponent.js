@@ -7,17 +7,17 @@ const SeatComponent = () => {
   const seatData = useSelector(selectAllSeats);
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
+    <div className="container mx-auto p-5 space-y-6">
       {seatData.map((category, index) => (
         <div key={index} className="">
-          {/* Category Header */}
+          
           <div className="text-center mb-4">
             <h3 className="text-lg font-semibold">
               {category.name} : ₹{category.price}
             </h3>
           </div>
 
-          {/* Seat Rows */}
+          
           <div className="space-y-2">
             {category.rows.map((row, rowIndex) => (
               <div key={rowIndex} className="flex justify-center gap-2">

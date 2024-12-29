@@ -6,6 +6,12 @@ function filterSelectedSeats(allSeats) {
   return allSeats.filter((seat) => seat.status === "selected");
 }
 
+// export const SeatState = {
+//   Available: 'available',
+//   Selected: 'selected',
+//   Booked: 'booked',
+// };
+
 const seatSlice = createSlice({
   name: "seats",
   initialState: generateSeats(layout),
@@ -18,7 +24,7 @@ const seatSlice = createSlice({
         category.rows.forEach((row) => {
           row.forEach((seat) => {
             if (seat.id === id) {
-              if (seat.status === "available") {
+              if (seat.status === 'available') {
                 seat.status = "selected"; // Mark as selected
               } else if (seat.status === "selected") {
                 seat.status = "available"; // Mark as available
@@ -29,17 +35,12 @@ const seatSlice = createSlice({
         });
       }
     },
-    bookSelectedSeats: (state, action) => {
-      const {selectedSeats} = action.payload;
-      console.log("selectedSeats",selectedSeats);
-
+    bookSelectedSeats: (state) => {
       state.forEach((category) => {
         category.rows.forEach((row) => {
           row.forEach((seat) => {
-            const selectedSeatIndex = selectedSeats.findIndex((s) => s.id === seat.id);
-            if (selectedSeatIndex != -1) {
-              seat.status = "booked";
-              console.log(`Seat ${seat.id} booked.`);
+            if (seat.status === 'selected') {
+              seat.status = 'booked'; // Mark selected seats as booked
             }
           });
         });
@@ -55,13 +56,15 @@ export const selectSelectedSeats = (state) => {
     category.rows.forEach((row) => {
       row.forEach((seat) => {
         if (seat.status === "selected") {
-          selectedSeats.push(seat);
+          selectedSeats.push({...seat, price: category.price, category: category.name });
         }
       });
     });
     return selectedSeats;
   }, []);
 };
+
+export const selectTotalAmount = (state) => selectSelectedSeats(state).reduce((acc, ele) => acc + ele.price, 0);
 
 export const { toggleSelectSeat, bookSelectedSeats } = seatSlice.actions;
 export default seatSlice.reducer;
